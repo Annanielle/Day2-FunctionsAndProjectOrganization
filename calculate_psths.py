@@ -68,32 +68,36 @@ cells = extract_cells(filename)
 # %% Merge and Compress Extracted Data
 # Exercise: Make a `merge_data(trials, cells, spikes)` function, returning the `merged` variable.
 
-import pandas as pd
-merged = pd.merge(left=cells, left_index=True, right=spikes, right_on='spike_cell')
-merged = pd.merge(left=trials, right=merged, left_index=True, right_on='spike_trial').reset_index(drop=True)
-merged.columns
-merged = (merged
-    .rename(columns=dict(
-        brain_groups="brain_area",
-        spike_trial="trial_id",
-        spike_cell="cell_id",
-        spike_time="time"
-    ))
-    [[
-        'trial_id',
-        'contrast_left',
-        'contrast_right',
-        'stim_onset',
-        'cell_id',
-        'brain_area',
-        'time'
-    ]]
-    .astype(dict(   
-        brain_area = 'category',
-    ))
-    # 
-)
-merged.info()
+def merge_data(trials, cells, spikes):
+    import pandas as pd
+    merged = pd.merge(left=cells, left_index=True, right=spikes, right_on='spike_cell')
+    merged = pd.merge(left=trials, right=merged, left_index=True, right_on='spike_trial').reset_index(drop=True)
+    merged.columns
+    merged = (merged
+        .rename(columns=dict(
+            brain_groups="brain_area",
+            spike_trial="trial_id",
+            spike_cell="cell_id",
+            spike_time="time"
+        ))
+        [[
+            'trial_id',
+            'contrast_left',
+            'contrast_right',
+            'stim_onset',
+            'cell_id',
+            'brain_area',
+            'time'
+        ]]
+        .astype(dict(   
+            brain_area = 'category',
+        ))
+        # 
+    )
+    merged.info()
+    return merged
+
+merged = merge_data(trials, cells, spikes)
 
 
 # %% Calculate Time Bins for PSTH
