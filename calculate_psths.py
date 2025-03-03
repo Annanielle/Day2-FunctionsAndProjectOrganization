@@ -25,14 +25,17 @@ download_data(url=url, filename=filename)
 # %% Load Data
 # Exercise: Make a `load_data(filename)` function, returning the `dset` variable.
 
+def load_data(filename):
+    import xarray as xr
+    dset = xr.load_dataset(filename)
+    return(dset)
 
+dset = load_data(filename)
 
 # %% Extract Experiment-Level Data
 # Exercise: Make an `extract_trials(filename)` function, returning the `trials` variable.
 
-import xarray as xr
-
-dset = xr.load_dataset(filename)
+#import xarray as xr
 trials = dset[['contrast_left', 'contrast_right', 'stim_onset']].to_dataframe()
 trials
 
