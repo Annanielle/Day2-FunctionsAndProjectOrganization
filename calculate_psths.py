@@ -34,6 +34,11 @@ dset = load_data(filename)
 
 # %% Extract Experiment-Level Data
 # Exercise: Make an `extract_trials(filename)` function, returning the `trials` variable.
+def extract_trials(filename):
+    import xarray as xr
+    dset = xr.load_dataset(filename)
+    trials = dset[['contrast_left', 'contrast_right', 'stim_onset']].to_dataframe()
+    return(trials)
 
 #import xarray as xr
 trials = dset[['contrast_left', 'contrast_right', 'stim_onset']].to_dataframe()
@@ -41,14 +46,13 @@ trials
 
 # %% Extract Spike-Time Data
 # Exercise: Make an `extract_spikes(filename)` function, returning the `spikes` variable.
+def extract_spikes(filename):
+    import xarray as xr
+    dset = xr.load_dataset(filename)
+    spikes = dset[['spike_trial', 'spike_cell', 'spike_time']].to_dataframe()
+    return spikes
 
-import xarray as xr
-
-dset = xr.load_dataset(filename)
-spikes = dset[['spike_trial', 'spike_cell', 'spike_time']].to_dataframe()
-spikes
-
-
+spikes = extract_spikes(filename)
 # %% Extract Cell-Level Data
 # Exercise: Make an `extract_cells(filename)` function, returning the `cells` variable.
 
