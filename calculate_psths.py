@@ -56,11 +56,14 @@ spikes = extract_spikes(filename)
 # %% Extract Cell-Level Data
 # Exercise: Make an `extract_cells(filename)` function, returning the `cells` variable.
 
-import xarray as xr
+def extract_cells(filename):
+    import xarray as xr
 
-dset = xr.load_dataset(filename)
-cells = dset['brain_groups'].to_dataframe()
-cells
+    dset = xr.load_dataset(filename)
+    cells = dset['brain_groups'].to_dataframe()
+    return(cells)
+
+cells = extract_cells(filename)
 
 # %% Merge and Compress Extracted Data
 # Exercise: Make a `merge_data(trials, cells, spikes)` function, returning the `merged` variable.
